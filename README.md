@@ -1,4 +1,5 @@
 工程简要说明:
+
 	startrsm.sh--启动脚本
 	stoprsm.sh--关闭脚本
 	clear.sh--清理脚本
