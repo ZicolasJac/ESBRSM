@@ -1,0 +1,8 @@
+ClearCase CopyAreaDB|4
+hx-esb\EsbMonitor\tools\agent\esb_rsm\lib
+2
+4
+f:log4j-1.2.8.jar|1|1530d16ef33|5619c|17cba762|9561d60a5b8e4cb6a9ffaf5a1fe7b29d|0
+d:MOMPlugIn.jar|1|1530d16eecd|d27|8bfd5dbe|35bcfe72ba7e4d15a3e8737e917ec50b|0
+16:message-server-1.0.jar|1|1530d16efa6|65d02|8f18f4a2|993f0d31b6fb4f278fdc53bba9261405|0
+b:esb_rsm.jar|1|1530d16eee9|18bfa|89cb7e89|4223983f1c374295b457bdd3a285ea34|0

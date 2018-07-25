@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties>
+<project default="ESBRSM" name="ESBRSM" basedir=".">
+	<description>ESBRSM</description>
+	<property name="dest" location="dest"/>
+	<property name="classes" location="${dest}/temp/classes"/>
+
+	<path id="classpath">
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<delete dir="${dest}/*"/>
+		<mkdir dir="${dest}/temp/classes"/>
+		<mkdir dir="${dest}/temp/ESBRSM"/>
+	</target>
+
+	<target name="compile_source" depends="init">
+		<echo>源代码构建</echo>
+		<javac srcdir="src" destdir="${classes}" target="1.7" debug="on" encoding="UTF-8">
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+
+	<target name="ESBRSM" depends="compile_source">
+		<echo>building esb_rsm project</echo>
+		<jar destfile="lib/ESBRSM.jar">
+			<fileset dir="${classes}"/>
+		</jar>
+
+		<copy todir="${dest}/temp/ESBRSM/lib">
+			<fileset dir="lib"/>
+		</copy>
+		
+		<copy todir="${dest}/temp/ESBRSM/monms">
+			<fileset dir="monms"/>
+		</copy>
+		
+		<copy todir="${dest}/temp/ESBRSM/monsh">
+			<fileset dir="monsh"/>
+		</copy>
+		
+		<copy todir="${dest}/temp/ESBRSM/tmp">
+			<fileset dir="tmp"/>
+		</copy>
+		
+		<copy todir="${dest}/temp/ESBRSM">
+			<fileset dir="./">
+				<include name="*.sh"/>
+			</fileset>
+		</copy>
+
+		<delete dir="${classes}"/>
+		
+		<zip destfile="${dest}/ESBRSM.zip">
+			<fileset dir="${dest}/temp"/>
+		</zip>
+	
+		<delete dir="${dest}/temp"/>
+	</target>
+</project>
