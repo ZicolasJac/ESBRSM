@@ -1,0 +1,88 @@
+<esb_rsm servName="AP1" monTime="201801121653">
+    <cpu>
+        <item user="7.7" sys="10.2" wait="0" idle="55" cpunum="8"></item>
+    </cpu>
+    <mem>
+        <item rfree="1.67861" vfree="77.3613" rfmb="267.75" vfmb="8088.9" rtmb="15950.7" vtmb="10456"></item>
+    </mem>
+    <disk>
+        <item diskname="hdisk0" DISKBSIZE="0" DISKBUSY="0" DISKREAD="0" DISKWRITE="0" xferr="0"></item>
+        <item diskname="hdisk1" DISKBSIZE="0" DISKBUSY="0" DISKREAD="0" DISKWRITE="0" xferr="0"></item>
+        <item diskname="hdisk2" DISKBSIZE="0" DISKBUSY="0" DISKREAD="0" DISKWRITE="0" xferr="0"></item>
+        <item diskname="hdisk3" DISKBSIZE="0" DISKBUSY="0" DISKREAD="0" DISKWRITE="0" xferr="0"></item>
+        <item diskname="hdisk4" DISKBSIZE="0" DISKBUSY="0" DISKREAD="0" DISKWRITE="0" xferr="0"></item>
+        <item diskname="hdisk5" DISKBSIZE="0" DISKBUSY="0" DISKREAD="0" DISKWRITE="0" xferr="0"></item>
+    </disk>
+    <net>
+        <item netname="lo" nrkps="0" nwkps="0" nrerr="0" nwerr="0" nprs="0" npws="0" nrsize="0" nwsize="0"></item>
+        <item netname="eth0" nrkps="13.3" nwkps="8.75" nrerr="0" nwerr="0" nprs="134" npws="115.25" nrsize="0" nwsize="0"></item>
+    </net>
+    <file>
+        <item filename="/" totsize="29401" freesize="20150" usedpct="28%" iusedsize="0" iusedpct="0"></item>
+        <item filename="/boot" totsize="477" freesize="418" usedpct="8%" iusedsize="0" iusedpct="0"></item>
+        <item filename="/esbapp" totsize="251852" freesize="152838" usedpct="37%" iusedsize="0" iusedpct="0"></item>
+        <item filename="/boslog" totsize="4908" freesize="1801" usedpct="62%" iusedsize="0" iusedpct="0"></item>
+        <item filename="/tuxedo" totsize="9948" freesize="8091" usedpct="15%" iusedsize="0" iusedpct="0"></item>
+    </file>
+    <proc>
+        <item pname="接入容器" puser="esbapp" pid="5672" stime="12:45" rtime="10:33" cpu="4.2" mem="17.0" sz="14718948" rss="2783040" flag="0"></item>
+        <item pname="控制台" puser="-" pid="-" stime="-" rtime="-" cpu="0" mem="0" sz="0" rss="0" flag="1"></item>
+        <item pname="接出容器" puser="esbapp" pid="5672" stime="12:45" rtime="10:33" cpu="4.2" mem="17.0" sz="14718948" rss="2783040" flag="0"></item>
+        <item pname="流水服务" puser="-" pid="5672" stime="12:45" rtime="10:33" cpu="4.2" mem="17.0" sz="14718948" rss="2783040" flag="0"></item>
+        <item pname="流控服务" puser="-" pid="5672" stime="12:45" rtime="10:33" cpu="4.2" mem="17.0" sz="14718948" rss="2783040" flag="0"></item>
+        <item pname="核心路由" puser="esbapp" pid="5672" stime="12:45" rtime="10:33" cpu="4.2" mem="17.0" sz="14718948" rss="2783040" flag="0"></item>
+    </proc>
+    <mom>
+        <item qmn="5111" qn="AdminService.in" depth="10000" inp="0" opp="1" flag="0"></item>
+        <item qmn="5112" qn="AdminService.out" depth="10000" inp="0" opp="0" flag="0"></item>
+        <item qmn="5121" qn="JournalLogService.in" depth="10000" inp="0" opp="0" flag="0"></item>
+        <item qmn="5122" qn="JournalLogService.out" depth="10000" inp="0" opp="0" flag="0"></item>
+        <item qmn="5139" qn="JournalLogService1.in" depth="10000" inp="0" opp="0" flag="0"></item>
+    </mom>
+    <memq>
+        <item  qn="REQ_001" qmsg="11" depth="10000" flag="0"></item>
+        <item  qn="REQ_002" qmsg="11" depth="10000" flag="0"></item>
+        <item  qn="REQ_003" qmsg="11" depth="10000" flag="0"></item>
+    </memq>
+   	<dbsql>
+   		<item sql_text="xxxxxx" sql_type="1" run_num="11" run_time="20180802"></item>
+   	</dbsql>
+   	<dbspc>
+   		<item spc_name="sss" tot_num="100" used_num="21" used_pct="21"></item>
+   	</dbspc>
+   	<dbcomm>
+   		<item curr_conn="11" max_conn="100" curr_lock="21" max_lock="100" lock_pct="21" dead_lock="1" log_free="1" log_used="91" log_pct="1"></item>
+   	</dbcomm>
+    <pool>
+        <protocolThreadPool>
+			<ThreadPool app="AP1" poolName="pool" maxSize="20" activeSize="0" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0" />
+		</protocolThreadPool>
+		<appThreadPool>
+			<ThreadPool app="LP1" container="local_in" poolName="pool-RouterConsumerListenerHandler-local_in" maxSize="300" activeSize="0" unusedSize="1" queueMaxSize="2147483647"  queueDepth="0"/>
+			<ThreadPool app="LP1" container="local_router" poolName="pool-RouterLauncher-ProviderListener" maxSize="60" activeSize="0" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0"/>
+			<ThreadPool app="LP1" container="local_router" poolName="pool-ESBLoadInvoker-router" maxSize="60" activeSize="0" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0"/>
+			<ThreadPool app="LP1" container="local_out" poolName="pool-RouterConsumerListenerHandler-local_out" maxSize="300" activeSize="0" unusedSize="300" queueMaxSize="2147483647"  queueDepth="0"/>
+		</appThreadPool>
+		<db>
+			<dbpool app="LP1" maxSize="100" useSize="25" appliaction="记录流水" maxnumDay="25"/>
+		</db>
+		<flow app="LP1">
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="T24212" htotal="0" total="60" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="FBS297" htotal="1" total="30" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="FMS246" htotal="0" total="80" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="CDBP54" htotal="0" total="30" used="0"/>
+			<token type="渠道+服务+系统" name="local_flowc" channelName="EBIP" serviceName="173000202" systemName="CDBP" htotal="0" total="44" used="0"/>
+			<token type="渠道+服务+系统" name="local_flowc" channelName="EPAY" serviceName="162001501" systemName="CPC" htotal="0" total="30" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="IPAP85" htotal="1" total="120" used="0"/>
+			<token type="渠道+服务+系统" name="local_flowc" channelName="EBIP103" serviceName="S14351T63795" systemName="PICP410" htotal="0" total="10" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="CFBP407" htotal="1" total="30" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="IPAP270" htotal="4" total="30" used="0"/>
+			<token type="默认" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="ALL" htotal="3" total="3000" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="IPAP409" htotal="1" total="90" used="0"/>
+			<token type="服务" name="local_flowc" channelName="ALL" serviceName="141001501" systemName="ALL" htotal="1" total="10" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="GT68" htotal="2" total="30" used="0"/>
+			<token type="系统" name="local_flowc" channelName="ALL" serviceName="ALL" systemName="FBS400" htotal="0" total="30" used="0"/>
+		</flow>
+    </pool>
+</esb_rsm>
+
