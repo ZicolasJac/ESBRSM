@@ -20,7 +20,7 @@ public class DBPoolMonitor {
 		try {
 			SnapshotIF snapshot = ProxoolFacade.getSnapshot("proxool_journal", true);
 			StringBuffer buff = new StringBuffer();
-			buff.append("<db>").append("\n\t");
+			buff.append("\t<db>").append("\n\t");
 			buff.append("<dbpool maxSize=\"").append(snapshot.getMaximumConnectionCount()).append("\"");
 			buff.append(" useSize=\"").append(snapshot.getActiveConnectionCount()).append("\"");
 			buff.append(" app=\"").append(appID).append("\"");

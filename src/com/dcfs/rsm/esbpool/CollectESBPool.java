@@ -106,7 +106,7 @@ public class CollectESBPool {
 		
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(file);
+			fos = new FileOutputStream(file, true);
 			fos.write(value);
 			fos.flush();
 		} catch (FileNotFoundException e) {

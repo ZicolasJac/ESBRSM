@@ -5,30 +5,32 @@ fi
 
 doonenetms(){
 echo "
-	awk -F',' 'BEGIN{value=0;value1=0;type=\"\";str=\"\"}
+    awk -F',' '
+        BEGIN{
+          value=0;value1=0;type=\"\";str=\"\"
+        }
 	{
-	if(count!=0 && type!=\$1)
-	{
-	value=value/count;
-	value1=value1/count
-	str=str\",\"value\",\"value1
-	value=0;
-	count=0;
-	}
-	type=\$1;
-	value+=\$$index
-	value1+=\$$index1
-	count+=1;
+	  if(count!=0 && type!=\$1){
+	    value=value/count;
+	    value1=value1/count
+	    str=str\",\"value\",\"value1
+	    value=0;
+	    count=0;
+	  }
+	  type=\$1;
+	  value+=\$$index
+	  value1+=\$$index1
+	  count+=1;
 	}
 	END{
-	if(count!=0)
-	{
-	value=value/count;
-	value1=value1/count
-	}
-	str=str\",\"value\",\"value1;
-	print str}
-	' $tmpf 
+	  if(count!=0){
+	    value=value/count;
+	    value1=value1/count
+	  }
+          str=str\" $1=\\\"\"value\"\\\" $2=\\\"\"value1\"\\\"\";
+	  print str
+        }
+	' $tmpf
 "|sh
 }
 
@@ -36,30 +38,27 @@ donenet(){
 	index=`expr $netn + 3`
 	index1=`expr $index + $netnum`
 	ntmpf=$tpath/ntmp.tmp
-	echo "echo $colvalue |awk -F',' '{print \$$index}'"|sh>$ntmpf
+	echo "echo $colvalue |awk -F',' '{print \$$index}'"|sh > $ntmpf
 	netname=`cat $ntmpf|awk -F'-' '{print $1}'`
-	
+
 	grep -v "read" $input|grep ^NET,>$tmpf
-	netrd=$netname`doonenetms`
-	
+	netrd="netname=\""$netname"\" "`doonenetms nrkps nwkps`
+
 	grep -v "read" $input|grep ^NETERROR,>$tmpf
-	netrd=$netrd`doonenetms`
+	netrd=$netrd`doonenetms nrerr nwerr`
 	
 	grep -v "read" $input|grep ^NETPACKET,>$tmpf
-	netrd=$netrd`doonenetms`
+	netrd=$netrd`doonenetms nprs npws`
 	
 	grep -v "read" $input|grep ^NETSIZE,>$tmpf
-	netrd=$netrd`doonenetms`
+	netrd=$netrd`doonenetms nrsize nwsize`
 	
-	echo $netrd
+	echo -e "\t<item "$netrd"></item>"
 }
 
 input=$tpath/net.tmp
 tmpf=$tpath/tmp.tmp
 output=$tpath/net_ms.tmp
-
-echo "<net>" > $output
-#echo "netname,nrkps,nwkps,nrerr,nwerr,nprs,npws,nrsize,nwsize" >> $output
 
 colvalue=`sed -n '1p' $input`
 colnum=`sed -n '1p' $input|awk -F, '{print NF-2}'`
@@ -67,6 +66,7 @@ netnum=`expr $colnum / 2`
 
 grep -v "read" $input > $tmpf
 
+echo "<net>" > $output
 netn=0
 while true
 do
@@ -76,4 +76,5 @@ do
 	else
 		break;
 	fi
-done 
+done
+echo "</net>" >> $output 

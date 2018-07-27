@@ -55,13 +55,13 @@
    	</dbcomm>
     <pool>
         <protocolThreadPool>
-			<ThreadPool app="AP1" poolName="pool" maxSize="20" activeSize="0" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0" />
+			<ThreadPool app="AP1" poolName="pool" maxSize="20" activeSize="0"  coreSize="10" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0"/>
 		</protocolThreadPool>
 		<appThreadPool>
-			<ThreadPool app="LP1" container="local_in" poolName="pool-RouterConsumerListenerHandler-local_in" maxSize="300" activeSize="0" unusedSize="1" queueMaxSize="2147483647"  queueDepth="0"/>
-			<ThreadPool app="LP1" container="local_router" poolName="pool-RouterLauncher-ProviderListener" maxSize="60" activeSize="0" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0"/>
-			<ThreadPool app="LP1" container="local_router" poolName="pool-ESBLoadInvoker-router" maxSize="60" activeSize="0" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0"/>
-			<ThreadPool app="LP1" container="local_out" poolName="pool-RouterConsumerListenerHandler-local_out" maxSize="300" activeSize="0" unusedSize="300" queueMaxSize="2147483647"  queueDepth="0"/>
+			<ThreadPool app="LP1" container="local_in" poolName="pool-RouterConsumerListenerHandler-local_in" maxSize="300" activeSize="0" coreSize="10" unusedSize="1" queueMaxSize="2147483647"  queueDepth="0"/>
+			<ThreadPool app="LP1" container="local_router" poolName="pool-RouterLauncher-ProviderListener" maxSize="60" activeSize="0" coreSize="10" unusedSize="0" queueMaxSize="2147483647"  queueDepth="0"/>
+			<ThreadPool app="LP1" container="local_router" poolName="pool-ESBLoadInvoker-router" maxSize="60" activeSize="0" unusedSize="0" coreSize="10" queueMaxSize="2147483647"  queueDepth="0"/>
+			<ThreadPool app="LP1" container="local_out" poolName="pool-RouterConsumerListenerHandler-local_out" maxSize="300" activeSize="0" coreSize="10" unusedSize="300" queueMaxSize="2147483647"  queueDepth="0"/>
 		</appThreadPool>
 		<db>
 			<dbpool app="LP1" maxSize="100" useSize="25" appliaction="记录流水" maxnumDay="25"/>

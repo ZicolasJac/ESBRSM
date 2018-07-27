@@ -389,7 +389,7 @@ public class ESBConfig implements IESBConfig {
 	
 	public static String getPoolAttributes(String appID) {
 		StringBuffer returnAttributes = new StringBuffer();
-		returnAttributes.append("<appThreadPool>").append("\n");
+		returnAttributes.append("\t<appThreadPool>").append("\n");
 		Set<Map.Entry<String, Executor>> entrySet = threadPools.entrySet();
 		for (Map.Entry<String, Executor> entry : entrySet) {
 			ThreadPoolExecutor threadPool = (ThreadPoolExecutor) entry.getValue();
@@ -404,12 +404,11 @@ public class ESBConfig implements IESBConfig {
 				returnAttributes.append(" maxSize=\"").append(maxSize + "\"");
 				int activeSize = threadPool.getActiveCount();
 				returnAttributes.append(" activeSize=\"").append(activeSize + "\"");
+				returnAttributes.append(" coreSize=\"").append(threadPool.getCorePoolSize() + "\"");
 				int poolSize = threadPool.getPoolSize();
 				int unusedSize = poolSize - activeSize;
 				returnAttributes.append(" unusedSize=\"").append(unusedSize + "\"");
-//				long queueMaxSize = threadPool.getTaskCount();
-//				returnAttributes.append(" queueMaxSize=\"2147483647\" ");
-				returnAttributes.append(" queueMaxSize=\"").append(threadPool.getMaximumPoolSize()+"\"");
+				returnAttributes.append(" queueMaxSize=\"2147483647\"");
 				int queueSize = threadPool.getQueue().size();
 				returnAttributes.append(" queueDepth=\"").append(queueSize + "\"/>");
 				returnAttributes.append("\n");
