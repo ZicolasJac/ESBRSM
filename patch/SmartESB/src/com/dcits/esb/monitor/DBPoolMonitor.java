@@ -20,13 +20,13 @@ public class DBPoolMonitor {
 		try {
 			SnapshotIF snapshot = ProxoolFacade.getSnapshot("proxool_journal", true);
 			StringBuffer buff = new StringBuffer();
-			buff.append("\t<db>").append("\n\t");
+			buff.append("\t<db>").append("\n\t\t");
 			buff.append("<dbpool maxSize=\"").append(snapshot.getMaximumConnectionCount()).append("\"");
 			buff.append(" useSize=\"").append(snapshot.getActiveConnectionCount()).append("\"");
 			buff.append(" app=\"").append(appID).append("\"");
 			buff.append(" appliaction=\"记录流水\"");
-			buff.append(" />").append("\n");
-			buff.append("</db>").append("\n");
+			buff.append("/>\n");
+			buff.append("\t</db>").append("\n");
 			result = buff.toString(); 
 		} catch (ProxoolException e) {
 			log.error("获取监控数据库连接池信息出现异常:"+e);

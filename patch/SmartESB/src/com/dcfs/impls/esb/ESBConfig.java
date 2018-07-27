@@ -394,7 +394,7 @@ public class ESBConfig implements IESBConfig {
 		for (Map.Entry<String, Executor> entry : entrySet) {
 			ThreadPoolExecutor threadPool = (ThreadPoolExecutor) entry.getValue();
 			if (threadPool != null) {
-				returnAttributes.append("\t");
+				returnAttributes.append("\t\t");
 				returnAttributes.append("<ThreadPool");
 				returnAttributes.append(" app=\"").append(appID).append("\"");
 				returnAttributes.append(" container=\"").append(getConfig().getProperty("com.dcfs.esb.client.location")).append("\"");
@@ -414,7 +414,7 @@ public class ESBConfig implements IESBConfig {
 				returnAttributes.append("\n");
 			}
 		}
-		returnAttributes.append("</appThreadPool>").append("\n");
+		returnAttributes.append("\t</appThreadPool>").append("\n");
 		if (log.isDebugEnabled()) {
 			log.debug(returnAttributes.toString());
 		}

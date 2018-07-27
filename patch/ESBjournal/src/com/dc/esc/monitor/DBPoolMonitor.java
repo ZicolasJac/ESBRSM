@@ -44,14 +44,14 @@ public class DBPoolMonitor {
 		}
 		
 		/* 拼接响应报文 */
-		buff.append("\t<db>").append("\n\t");
+		buff.append("\t<db>").append("\n\t\t");
 		buff.append("<dbpool maxSize=\"").append(maxSize).append("\"");
 		buff.append(" useSize=\"").append(useSize).append("\"");
 		buff.append(" app=\"").append(appID).append("\"");
 		buff.append(" appliaction=\"流水入库\"");
 		buff.append(" maxnumDay=\"").append(maxnum_day).append("\"");
-		buff.append(" />");
-		buff.append("</db>").append("\n");
+		buff.append(" />\n");
+		buff.append("\t</db>").append("\n");
 		result = buff.toString();
 		
 		return result;

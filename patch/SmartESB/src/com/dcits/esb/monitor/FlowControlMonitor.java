@@ -12,6 +12,11 @@ import com.dc.esb.flowcontrol.interfaces.ITokenServerContainer;
 import com.dc.esb.flowcontrol.interfaces.ITokenServerList;
 import com.dcfs.impls.esb.ESBConfig;
 
+/**
+ * 监控获取流控信息
+ * @author ZhangJinchuang
+ *
+ */
 public class FlowControlMonitor {
 
 	private static Log log = LogFactory.getLog(FlowControlMonitor.class);
@@ -53,7 +58,7 @@ public class FlowControlMonitor {
 			int count = tokenList.getCount();
 			int used = tokenList.getCurrentlyUsedSiz();
 			int dayMaxTokenNum = getDayMaxnumOfOneTokenPool(key, used);
-			tokens.append("\t");
+			tokens.append("\t\t");
 			tokens.append("<token type=\"").append(type).append("\"");
 			tokens.append(" name=\"").append(ESBConfig.getConfig().getProperty("com.dcfs.esb.client.location")).append("\"");
 			tokens.append(" channelName=\"").append(channelName).append("\"");
@@ -64,7 +69,7 @@ public class FlowControlMonitor {
 			tokens.append(" used=\"").append(used).append("\"").append("/>");
 			tokens.append("\n");
 		}
-		tokens.append("</flow>").append("\n");
+		tokens.append("\t</flow>").append("\n");
 		if (log.isDebugEnabled()) {
 			log.debug("流控信息：" + tokens.toString());
 		}

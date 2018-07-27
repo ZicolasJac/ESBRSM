@@ -6,7 +6,7 @@ export mpath=`pwd`/monms
 ms_time=`date +%Y%m%d%H%M`
 ms_date=`date +%Y%m%d`
 mkdir $mpath/$ms_date  1>/dev/null 2>/dev/null
-ms_file=$mpath/$ms_date/esb_ms_$ms_time.txt
+ms_file=$mpath/$ms_date/esb_ms_$ms_time.xml
 
 aptype=`echo $appname |cut -b1-2`
 
@@ -33,7 +33,7 @@ echo '<esb_rsm servName="'$appname'" monTime="'$ms_time'">' > $ms_file
 cat $tpath/cpu_ms.tmp >> $ms_file
 cat $tpath/mem_ms.tmp >> $ms_file
 cat $tpath/disk_ms.tmp >> $ms_file
-#cat $tpath/net_ms.tmp >> $ms_file
+cat $tpath/net_ms.tmp >> $ms_file
 cat $tpath/file.tmp >> $ms_file
 cat $tpath/proc.tmp >> $ms_file
 if [ "$aptype" = "AP" ]; then
