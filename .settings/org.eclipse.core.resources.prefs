@@ -1,2 +1,8 @@
 eclipse.preferences.version=1
+encoding//patch/ESBjournal/config.properties=UTF-8
+encoding//patch/SmartESB/configs/core_conf/conf/mxsd_process.properties=UTF-8
+encoding//patch/SmartESB/configs/flow_conf/conf/mxsd_process.properties=UTF-8
+encoding//patch/SmartESB/configs/flow_conf1/conf/mxsd_process.properties=UTF-8
+encoding//patch/SmartESB/configs/in_conf/conf/mxsd_process.properties=UTF-8
+encoding//patch/SmartESB/configs/out_conf/conf/mxsd_process.properties=UTF-8
 encoding/<project>=UTF-8

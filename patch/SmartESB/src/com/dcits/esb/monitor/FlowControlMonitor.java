@@ -12,7 +12,11 @@ import com.dc.esb.flowcontrol.interfaces.ITokenServerContainer;
 import com.dc.esb.flowcontrol.interfaces.ITokenServerList;
 import com.dcfs.impls.esb.ESBConfig;
 
-@SuppressWarnings("unchecked")
+/**
+ * 监控获取流控信息
+ * @author ZhangJinchuang
+ *
+ */
 public class FlowControlMonitor {
 
 	private static Log log = LogFactory.getLog(FlowControlMonitor.class);
@@ -25,7 +29,7 @@ public class FlowControlMonitor {
 		ITokenServerContainer container = TokenServerContainerFactory.getInstance().getTokenServerContainer();
 		Map<String, ITokenServerList> tokenMap = container.getTokenServerMap();
 		StringBuffer tokens = new StringBuffer();
-		tokens.append("<flow app=\"").append(appID).append("\">").append("\n");
+		tokens.append("\t<flow app=\"").append(appID).append("\">").append("\n");
 		for (String key : tokenMap.keySet()) {
 			String[] keys = key.split("&");
 			String channelName = keys[0];
@@ -54,9 +58,9 @@ public class FlowControlMonitor {
 			int count = tokenList.getCount();
 			int used = tokenList.getCurrentlyUsedSiz();
 			int dayMaxTokenNum = getDayMaxnumOfOneTokenPool(key, used);
-			tokens.append("\t");
+			tokens.append("\t\t");
 			tokens.append("<token type=\"").append(type).append("\"");
-			tokens.append(" app=\"").append(ESBConfig.getConfig().getProperty("com.dcfs.esb.client.location")).append("\"");
+			tokens.append(" name=\"").append(ESBConfig.getConfig().getProperty("com.dcfs.esb.client.location")).append("\"");
 			tokens.append(" channelName=\"").append(channelName).append("\"");
 			tokens.append(" serviceName=\"").append(serviceName).append("\"");
 			tokens.append(" systemName=\"").append(systemName).append("\"");
@@ -65,7 +69,7 @@ public class FlowControlMonitor {
 			tokens.append(" used=\"").append(used).append("\"").append("/>");
 			tokens.append("\n");
 		}
-		tokens.append("</flow>").append("\n");
+		tokens.append("\t</flow>").append("\n");
 		if (log.isDebugEnabled()) {
 			log.debug("流控信息：" + tokens.toString());
 		}

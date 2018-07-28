@@ -1,3 +1,5 @@
+#一分钟采集一次
+
 while true
 do
   echo "start collect:"`date +"%Y%m%d %H:%M:%S"`
