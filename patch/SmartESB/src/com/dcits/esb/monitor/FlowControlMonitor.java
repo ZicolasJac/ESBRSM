@@ -29,7 +29,7 @@ public class FlowControlMonitor {
 		ITokenServerContainer container = TokenServerContainerFactory.getInstance().getTokenServerContainer();
 		Map<String, ITokenServerList> tokenMap = container.getTokenServerMap();
 		StringBuffer tokens = new StringBuffer();
-		tokens.append("\t<flow app=\"").append(appID).append("\">").append("\n");
+		tokens.append("\t<flow>").append("\n");
 		for (String key : tokenMap.keySet()) {
 			String[] keys = key.split("&");
 			String channelName = keys[0];
@@ -59,14 +59,15 @@ public class FlowControlMonitor {
 			int used = tokenList.getCurrentlyUsedSiz();
 			int dayMaxTokenNum = getDayMaxnumOfOneTokenPool(key, used);
 			tokens.append("\t\t");
-			tokens.append("<token type=\"").append(type).append("\"");
+			tokens.append("<item app=\"").append(appID).append("\"");
+			tokens.append(" type=\"").append(type).append("\"");
 			tokens.append(" name=\"").append(ESBConfig.getConfig().getProperty("com.dcfs.esb.client.location")).append("\"");
 			tokens.append(" channelName=\"").append(channelName).append("\"");
 			tokens.append(" serviceName=\"").append(serviceName).append("\"");
 			tokens.append(" systemName=\"").append(systemName).append("\"");
 			tokens.append(" htotal=\"").append(dayMaxTokenNum).append("\"");
 			tokens.append(" total=\"").append(count).append("\"");
-			tokens.append(" used=\"").append(used).append("\"").append("/>");
+			tokens.append(" used=\"").append(used).append("\"").append(">").append("</item>");
 			tokens.append("\n");
 		}
 		tokens.append("\t</flow>").append("\n");

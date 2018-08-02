@@ -395,7 +395,7 @@ public class ESBConfig implements IESBConfig {
 			ThreadPoolExecutor threadPool = (ThreadPoolExecutor) entry.getValue();
 			if (threadPool != null) {
 				returnAttributes.append("\t\t");
-				returnAttributes.append("<ThreadPool");
+				returnAttributes.append("<item");
 				returnAttributes.append(" app=\"").append(appID).append("\"");
 				returnAttributes.append(" container=\"").append(getConfig().getProperty("com.dcfs.esb.client.location")).append("\"");
 				String poolName = (String) entry.getKey();
@@ -410,7 +410,7 @@ public class ESBConfig implements IESBConfig {
 				returnAttributes.append(" unusedSize=\"").append(unusedSize + "\"");
 				returnAttributes.append(" queueMaxSize=\"2147483647\"");
 				int queueSize = threadPool.getQueue().size();
-				returnAttributes.append(" queueDepth=\"").append(queueSize + "\"/>");
+				returnAttributes.append(" queueDepth=\"").append(queueSize + "\">").append("</item>");
 				returnAttributes.append("\n");
 			}
 		}

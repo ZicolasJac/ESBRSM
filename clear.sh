@@ -1,3 +1,7 @@
+#!/bin/bash
+
+#每天23点清理前一天数据
+
 export mpath=`pwd`/monms
 targetHour=23
 

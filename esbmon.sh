@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export spath=`pwd`/monsh
 export tpath=`pwd`/tmp
 export mpath=`pwd`/monms
@@ -22,10 +24,9 @@ if [ "$aptype" = "AP" ]; then
   echo "appType is APP"
   sh $spath/mom.sh $tpath
   sh $spath/esbPool.sh $appname $tpath/pool_ms.tmp $in_url $router_url $out_url $journal_url $flow_url $subFlow_url
-fi
-if [ "$aptype" = "DB" ]; then
+elif [ "$aptype" = "DB" ]; then
   echo "appType is DB"
-  sh $spath/db.sh
+  sh $spath/db.sh $tpath
 fi
 
 #输出结果信息到文件
@@ -37,8 +38,10 @@ cat $tpath/net_ms.tmp >> $ms_file
 cat $tpath/file.tmp >> $ms_file
 cat $tpath/proc.tmp >> $ms_file
 if [ "$aptype" = "AP" ]; then
-  cat $tpath/mom.tmp>>$ms_file
-  cat $tpath/pool_ms.tmp>>$ms_file
+  cat $tpath/mom.tmp >> $ms_file
+  cat $tpath/pool_ms.tmp >> $ms_file
+elif [ "$aptype" = "DB" ]; then
+  cat $tpath/db.tmp >> $ms_file
 fi
 echo '</esb_rsm>' >> $ms_file
 
