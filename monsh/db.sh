@@ -7,7 +7,7 @@ if [ $# -eq 1 ]; then
 fi
 
 #查询数据库结果暂存文件
-queryTmpDir=db_query.tmp
+queryTmpDir=$tpath/db_query.tmp
 #最终处理结果存放文件
 finalRes=$tpath/db.tmp
 
@@ -63,7 +63,7 @@ fun_query "select substr(trim(b.sql_text),0,150) as sql_text,
 	          b.invalidations,
 	          b.optimizer_cost,
               round(b.ELAPSED_TIME/1000, 4) as total_spend_time,
-              round(b.ELAPSED_TIME/1000/(decode(b.executions，0，1，b.executions）), 4) as avg_spend_time,
+              round(b.ELAPSED_TIME/1000/(decode(b.executions,0,1,b.executions)), 4) as avg_spend_time,
               b.first_load_time,
 	          b.last_load_time,
               to_char(b.last_active_time,'yyyy-mm-dd hh24:mi:ss.SS') as last_active_time
