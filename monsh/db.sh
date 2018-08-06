@@ -29,6 +29,7 @@ sqlplus -S $username/$password@$ip:$port/$instance >$queryTmpDir << EOF
     set newp none
     set echo off
     set feedback off
+    $2
     $1
     exit
 EOF
@@ -52,21 +53,21 @@ cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
   gsub(/^ +| +$/,"",$3);
   gsub(/^ +| +$/,"",$4);
   gsub(/^ +| +$/,"",$5);
-  print "\t\t<item name=\""$1"\" total_size=\""$2"\" used_size=\""$3"\" free_size=\""$4"\" free_rate=\""$5"\"/>" >> resPath;
+  print "\t\t<item name=\""$1"\" total_size=\""$2"\" used_size=\""$3"\" free_size=\""$4"\" free_rate=\""$5"\"></item>" >> resPath;
 }'
 echo -e "\t</tablespace>" >> $finalRes
 
 echo -e "\t<sql>" >> $finalRes
 #查询执行过的sql语句的文本、执行次数、无效次数、查询成本、执行总耗时(ms)、平均执行耗时(ms)、初次载入时间、最后加载时间、最后执行时间
 fun_query "select substr(trim(b.sql_text),0,150) as sql_text,
-	          b.executions,
-	          b.invalidations,
-	          b.optimizer_cost,
-              round(b.ELAPSED_TIME/1000, 4) as total_spend_time,
-              round(b.ELAPSED_TIME/1000/(decode(b.executions,0,1,b.executions)), 4) as avg_spend_time,
-              b.first_load_time,
-	          b.last_load_time,
-              to_char(b.last_active_time,'yyyy-mm-dd hh24:mi:ss.SS') as last_active_time
+                  b.executions,
+                  b.invalidations,
+                  b.optimizer_cost,
+                  round(b.ELAPSED_TIME/1000, 4) as total_spend_time,
+                  round(b.ELAPSED_TIME/1000/(decode(b.executions,0,1,b.executions)), 4) as avg_spend_time,
+                  b.first_load_time,
+                  b.last_load_time,
+                  to_char(b.last_active_time,'yyyy-mm-dd hh24:mi:ss.SS') as last_active_time
            from v\$sql b
            where b.parsing_schema_name='ESBIMON' and b.sql_fulltext not like '/*+%' and b.module is not null
            order by b.last_active_time desc;"
@@ -84,46 +85,46 @@ cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
   gsub(/^ +| +$/,"",$7);
   gsub(/^ +| +$/,"",$8);
   gsub(/^ +| +$/,"",$9);
-  print "\t\t<item text=\""$1"\" exec_num=\""$2"\" fail_num=\""$3"\" opti_cost=\""$4"\" total_spend_time=\""$5"\" avg_spend_time=\""$6"\" first_load_time=\""$7"\" last_load_time=\""$8"\" last_active_time=\""$9"\"/>" >> resPath;
+  print "\t\t<item text=\""$1"\" exec_num=\""$2"\" fail_num=\""$3"\" opti_cost=\""$4"\" total_spend_time=\""$5"\" avg_spend_time=\""$6"\" first_load_time=\""$7"\" last_load_time=\""$8"\" last_active_time=\""$9"\"></item>" >> resPath;
 }'
 echo -e "\t</sql>" >> $finalRes
 
-echo -e "\t<connNum>" >> $finalRes
-#查询数据库允许的最大连接数、当前的数据库连接数
-fun_query "select m.value as total_num,n.active_num 
-           from v\$parameter m,(select count(*) as active_num from v\$process) n 
-           where m.name='processes';"
-cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
-  gsub(/^ +| +$/,"",$1);
-  gsub(/^ +| +$/,"",$2);
-  print "\t\t<item total_num=\""$1"\" active_num=\""$2"\"/>" >> resPath;
-}'
-echo -e "\t</connNum>" >> $finalRes
-
-echo -e "\t<lock>" >> $finalRes
-#查询数据库锁,被锁对象类型、被锁对象名、被锁对象拥有者、锁模式、造成者用户名、造成者登录的机器名、造成锁的进程号、造成锁的会话号
-fun_query "select o.object_type,
-                  o.object_name,
-                  o.owner,
-                  l.locked_mode,
-                  s.username,
-                  s.machine,
-                  s.sid,
-                  s.serial#
-           from v\$locked_object l, dba_objects o, v\$session s
-           where l.object_id = o.object_id and l.session_id = s.sid;"
-cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
-  gsub(/^ +| +$/,"",$1);
-  gsub(/^ +| +$/,"",$2);
-  gsub(/^ +| +$/,"",$3);
-  gsub(/^ +| +$/,"",$4);
-  gsub(/^ +| +$/,"",$5);
-  gsub(/^ +| +$/,"",$6);
-  gsub(/^ +| +$/,"",$7);
-  gsub(/^ +| +$/,"",$8);
-  print "\t\t<item object_type=\""$1"\" object_name=\""$2"\" owner=\""$3"\" locked_mode=\""$4"\" username=\""$5"\" machine=\""$6"\" sid=\""$7"\" serial=\""$8"\"/>" >> resPath;
-}'
-echo -e "\t</lock>" >> $finalRes
+#echo -e "\t<connNum>" >> $finalRes
+##查询数据库允许的最大连接数、当前的数据库连接数
+#fun_query "select m.value as total_num,n.active_num 
+#           from v\$parameter m,(select count(*) as active_num from v\$process) n 
+#           where m.name='processes';" "col total_num for a10"
+#cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
+#  gsub(/^ +| +$/,"",$1);
+#  gsub(/^ +| +$/,"",$2);
+#  print "\t\t<item total_num=\""$1"\" active_num=\""$2"\"></item>" >> resPath;
+#}'
+#echo -e "\t</connNum>" >> $finalRes
+#
+#echo -e "\t<lock>" >> $finalRes
+##查询数据库锁,被锁对象类型、被锁对象名、被锁对象拥有者、锁模式、造成者用户名、造成者登录的机器名、造成锁的进程号、造成锁的会话号
+#fun_query "select o.object_type,
+#                  o.object_name,
+#                  o.owner,
+#                  l.locked_mode,
+#                  s.username,
+#                  s.machine,
+#                  s.sid,
+#                  s.serial#
+#           from v\$locked_object l, dba_objects o, v\$session s
+#           where l.object_id = o.object_id and l.session_id = s.sid;"
+#cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
+#  gsub(/^ +| +$/,"",$1);
+#  gsub(/^ +| +$/,"",$2);
+#  gsub(/^ +| +$/,"",$3);
+#  gsub(/^ +| +$/,"",$4);
+#  gsub(/^ +| +$/,"",$5);
+#  gsub(/^ +| +$/,"",$6);
+#  gsub(/^ +| +$/,"",$7);
+#  gsub(/^ +| +$/,"",$8);
+#  print "\t\t<item object_type=\""$1"\" object_name=\""$2"\" owner=\""$3"\" locked_mode=\""$4"\" username=\""$5"\" machine=\""$6"\" sid=\""$7"\" serial=\""$8"\"></item>" >> resPath;
+#}'
+#echo -e "\t</lock>" >> $finalRes
 
 echo -e "\t<tableSize>" >> $finalRes
 #查询当前数据库表占用的空间大小(MB)
@@ -135,8 +136,23 @@ cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
   gsub(/^ +| +$/,"",$1);
   gsub(/^ +| +$/,"",$2);
   gsub(/^ +| +$/,"",$3);
-  print "\t\t<item segment_name=\""$1"\" tablespace_name=\""$2"\" occur_size=\""$3"\"/>" >> resPath;
+  print "\t\t<item segment_name=\""$1"\" tablespace_name=\""$2"\" occur_size=\""$3"\"></item>" >> resPath;
 }'
 echo -e "\t</tableSize>" >> $finalRes
+
+echo -e "\t<dbcomm>" >> $finalRes
+#查询当前数据库通用信息
+fun_query "select m.value as total_num,n.active_num,l.curr_lock
+           from v\$parameter m,
+                (select count(*) as active_num from v\$process) n,
+                (select count(1) as curr_lock from v\$locked_object) l
+           where m.name='processes';" "col total_num for a10"
+cat $queryTmpDir |gawk -F^ -v resPath=$finalRes '{
+  gsub(/^ +| +$/,"",$1);
+  gsub(/^ +| +$/,"",$2);
+  gsub(/^ +| +$/,"",$3);
+  print "\t\t<item total_num=\""$1"\" active_num=\""$2"\" curr_lock=\""$3"\"/>" >> resPath;
+}'
+echo -e "\t</dbcomm>" >> $finalRes
 
 echo "</db>" >> $finalRes
